@@ -252,26 +252,28 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
         Expanded(
           child: _laps.isEmpty
               ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.flag_outlined,
-                        size: 64,
-                        color: Theme.of(context).textTheme.bodySmall?.color,
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'No hay vueltas registradas',
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Toca el botón de bandera para agregar una vuelta',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.flag_outlined,
+                          size: 64,
+                          color: Theme.of(context).textTheme.bodySmall?.color,
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'No hay vueltas registradas',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Toca el botón de bandera para agregar una vuelta',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                   ),
                 )
               : ListView.builder(

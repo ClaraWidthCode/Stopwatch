@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'core/constants/app_themes.dart';
+import 'core/di/injection_container.dart';
 import 'screens/home_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize date formatting for Spanish locale
+  await initializeDateFormatting('es', null);
+  
+  await init();
   runApp(const MyApp());
 }
 

@@ -112,22 +112,32 @@ class _TimerScreenState extends State<TimerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
-        child: Column(
-          children: [
-            // Timer Display Section
-            _buildTimerDisplay(context),
+        child: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height - 
+                         MediaQuery.of(context).padding.top - 
+                         MediaQuery.of(context).padding.bottom,
+            ),
+            child: Column(
+              children: [
+                // Timer Display Section
+                _buildTimerDisplay(context),
 
-            const SizedBox(height: 32),
+                const SizedBox(height: 32),
 
-            // Control Buttons Section
-            _buildControlButtons(context),
+                // Control Buttons Section
+                _buildControlButtons(context),
 
-            const SizedBox(height: 32),
+                const SizedBox(height: 32),
 
-            // Timer Setup Section
-            Expanded(child: _buildTimerSetup(context)),
-          ],
+                // Timer Setup Section
+                _buildTimerSetup(context),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -265,25 +275,23 @@ class _TimerScreenState extends State<TimerScreen> {
   Widget _buildTimerSetup(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'CONFIGURAR TEMPORIZADOR',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Theme.of(
-                  context,
-                ).textTheme.bodySmall?.color?.withOpacity(0.7),
-                letterSpacing: 1.2,
-              ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'CONFIGURAR TEMPORIZADOR',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: Theme.of(
+                context,
+              ).textTheme.bodySmall?.color?.withOpacity(0.7),
+              letterSpacing: 1.2,
             ),
-            const SizedBox(height: 24),
+          ),
+          const SizedBox(height: 24),
 
-            // Quick Presets
-            _buildQuickPresets(context),
-          ],
-        ),
+          // Quick Presets
+          _buildQuickPresets(context),
+        ],
       ),
     );
   }
