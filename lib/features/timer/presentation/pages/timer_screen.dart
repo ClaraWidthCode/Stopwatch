@@ -54,7 +54,9 @@ class _TimerScreenState extends State<TimerScreen> {
           return;
         }
 
-        _remainingTime = Duration(milliseconds: _remainingTime.inMilliseconds - 100);
+        _remainingTime = Duration(
+          milliseconds: _remainingTime.inMilliseconds - 100,
+        );
       });
     });
   }
@@ -83,7 +85,9 @@ class _TimerScreenState extends State<TimerScreen> {
           return;
         }
 
-        _remainingTime = Duration(milliseconds: _remainingTime.inMilliseconds - 100);
+        _remainingTime = Duration(
+          milliseconds: _remainingTime.inMilliseconds - 100,
+        );
       });
     });
   }
@@ -113,18 +117,16 @@ class _TimerScreenState extends State<TimerScreen> {
           children: [
             // Timer Display Section
             _buildTimerDisplay(context),
-            
+
             const SizedBox(height: 32),
-            
+
             // Control Buttons Section
             _buildControlButtons(context),
-            
+
             const SizedBox(height: 32),
-            
+
             // Timer Setup Section
-            Expanded(
-              child: _buildTimerSetup(context),
-            ),
+            Expanded(child: _buildTimerSetup(context)),
           ],
         ),
       ),
@@ -139,12 +141,14 @@ class _TimerScreenState extends State<TimerScreen> {
           Text(
             'TEMPORIZADOR',
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.7),
+              color: Theme.of(
+                context,
+              ).textTheme.bodySmall?.color?.withOpacity(0.7),
               letterSpacing: 1.2,
             ),
           ),
           const SizedBox(height: 24),
-          
+
           CircularProgressWidget(
             progress: progress,
             size: 250,
@@ -156,8 +160,8 @@ class _TimerScreenState extends State<TimerScreen> {
                   style: Theme.of(context).textTheme.displayLarge?.copyWith(
                     fontSize: 36,
                     fontWeight: FontWeight.bold,
-                    color: _isCompleted 
-                        ? AppColors.primary 
+                    color: _isCompleted
+                        ? AppColors.primary
                         : Theme.of(context).textTheme.displayLarge?.color,
                   ),
                 ),
@@ -165,40 +169,34 @@ class _TimerScreenState extends State<TimerScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'horas',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
+                    Text('horas', style: Theme.of(context).textTheme.bodySmall),
                     const SizedBox(width: 16),
-                    Text(
-                      'min',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
+                    Text('min', style: Theme.of(context).textTheme.bodySmall),
                     const SizedBox(width: 16),
-                    Text(
-                      'seg',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
+                    Text('seg', style: Theme.of(context).textTheme.bodySmall),
                   ],
                 ),
                 if (_isRunning || _isPaused || _isCompleted) ...[
                   const SizedBox(height: 16),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
-                      color: _isCompleted 
+                      color: _isCompleted
                           ? AppColors.success.withOpacity(0.1)
                           : AppColors.primary.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
-                      _isCompleted 
+                      _isCompleted
                           ? 'Completado'
-                          : _isRunning 
-                              ? 'Activo ahora'
-                              : 'Pausado',
+                          : _isRunning
+                          ? 'Activo ahora'
+                          : 'Pausado',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: _isCompleted 
+                        color: _isCompleted
                             ? AppColors.success
                             : AppColors.primary,
                         fontWeight: FontWeight.w600,
@@ -219,20 +217,19 @@ class _TimerScreenState extends State<TimerScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         // Reset Button
-        custom.CustomResetButton(
+        custom.CustomIconButton(
+          icon: Icons.refresh,
           size: 50,
           backgroundColor: Theme.of(context).colorScheme.surface,
           iconColor: Theme.of(context).textTheme.bodyMedium?.color,
           onPressed: _totalTime.inMilliseconds > 0 ? _resetTimer : null,
         ),
-        
+
         // Play/Pause Button
         custom.CustomIconButton(
           icon: _isRunning ? Icons.pause : Icons.play_arrow,
           size: 70,
-          backgroundColor: _isCompleted 
-              ? AppColors.success 
-              : AppColors.primary,
+          backgroundColor: _isCompleted ? AppColors.success : AppColors.primary,
           iconColor: Colors.white,
           onPressed: () {
             if (_isRunning) {
@@ -248,18 +245,19 @@ class _TimerScreenState extends State<TimerScreen> {
             }
           },
         ),
-        
+
         // Setup Button
         custom.CustomIconButton(
           icon: Icons.settings,
           size: 50,
           backgroundColor: Theme.of(context).colorScheme.surface,
           iconColor: Theme.of(context).textTheme.bodyMedium?.color,
-          onPressed: _isRunning || _isPaused ? null : () {
-            _showTimerSetupDialog(context);
-          },
+          onPressed: _isRunning || _isPaused
+              ? null
+              : () {
+                  _showTimerSetupDialog(context);
+                },
         ),
-        
       ],
     );
   }
@@ -274,12 +272,14 @@ class _TimerScreenState extends State<TimerScreen> {
             Text(
               'CONFIGURAR TEMPORIZADOR',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.7),
+                color: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.color?.withOpacity(0.7),
                 letterSpacing: 1.2,
               ),
             ),
             const SizedBox(height: 24),
-            
+
             // Quick Presets
             _buildQuickPresets(context),
           ],
@@ -303,9 +303,9 @@ class _TimerScreenState extends State<TimerScreen> {
       children: [
         Text(
           'Presets rápidos',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
         ),
         const SizedBox(height: 12),
         Wrap(
@@ -319,7 +319,10 @@ class _TimerScreenState extends State<TimerScreen> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.surface,
                 foregroundColor: Theme.of(context).textTheme.bodyMedium?.color,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -342,9 +345,9 @@ class _TimerScreenState extends State<TimerScreen> {
           children: [
             Text(
               'Configuración manual',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 16),
             Row(
@@ -418,10 +421,7 @@ class _TimerScreenState extends State<TimerScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
+        Text(label, style: Theme.of(context).textTheme.bodySmall),
         const SizedBox(height: 4),
         TextField(
           controller: controller,
@@ -429,9 +429,7 @@ class _TimerScreenState extends State<TimerScreen> {
           textAlign: TextAlign.center,
           decoration: InputDecoration(
             hintText: '00',
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
             contentPadding: const EdgeInsets.symmetric(vertical: 12),
           ),
           onChanged: (value) {
@@ -449,12 +447,7 @@ class _TimerScreenState extends State<TimerScreen> {
     final hours = int.tryParse(_hoursController.text) ?? 0;
     final minutes = int.tryParse(_minutesController.text) ?? 0;
     final seconds = int.tryParse(_secondsController.text) ?? 0;
-    
-    return Duration(
-      hours: hours,
-      minutes: minutes,
-      seconds: seconds,
-    );
-  }
 
+    return Duration(hours: hours, minutes: minutes, seconds: seconds);
+  }
 }

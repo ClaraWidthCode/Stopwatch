@@ -14,7 +14,8 @@ class CustomResetIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveColor = color ?? Theme.of(context).iconTheme.color ?? Colors.black;
+    final effectiveColor =
+        color ?? Theme.of(context).iconTheme.color ?? Colors.black;
     final effectiveBackgroundColor = backgroundColor ?? Colors.grey.shade300;
 
     return SizedBox(
@@ -38,7 +39,9 @@ class CustomResetIcon extends StatelessWidget {
             height: size * 0.4,
             decoration: BoxDecoration(
               color: effectiveColor,
-              borderRadius: BorderRadius.circular(2), // Bordes ligeramente redondeados
+              borderRadius: BorderRadius.circular(
+                2,
+              ), // Bordes ligeramente redondeados
             ),
           ),
         ],

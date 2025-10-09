@@ -49,13 +49,11 @@ class _AlarmScreenState extends State<AlarmScreen> {
           children: [
             // Next Alarm Section
             _buildNextAlarmSection(context),
-            
+
             const SizedBox(height: 24),
-            
+
             // Alarms List Section
-            Expanded(
-              child: _buildAlarmsList(context),
-            ),
+            Expanded(child: _buildAlarmsList(context)),
           ],
         ),
       ),
@@ -75,12 +73,14 @@ class _AlarmScreenState extends State<AlarmScreen> {
           Text(
             'PRÓXIMA ALARMA',
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.7),
+              color: Theme.of(
+                context,
+              ).textTheme.bodySmall?.color?.withOpacity(0.7),
               letterSpacing: 1.2,
             ),
           ),
           const SizedBox(height: 16),
-          
+
           if (_nextAlarm != null) ...[
             CircularProgressWidget(
               progress: _calculateAlarmProgress(_nextAlarm!),
@@ -104,15 +104,9 @@ class _AlarmScreenState extends State<AlarmScreen> {
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       const SizedBox(width: 16),
-                      Text(
-                        'min',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
+                      Text('min', style: Theme.of(context).textTheme.bodySmall),
                       const SizedBox(width: 16),
-                      Text(
-                        'seg',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
+                      Text('seg', style: Theme.of(context).textTheme.bodySmall),
                     ],
                   ),
                 ],
@@ -122,17 +116,13 @@ class _AlarmScreenState extends State<AlarmScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.alarm,
-                  color: AppColors.primary,
-                  size: 16,
-                ),
+                Icon(Icons.alarm, color: AppColors.primary, size: 16),
                 const SizedBox(width: 8),
                 Text(
                   '${_nextAlarm!.time.hour.toString().padLeft(2, '0')}:${_nextAlarm!.time.minute.toString().padLeft(2, '0')}',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppColors.primary,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(color: AppColors.primary),
                 ),
               ],
             ),
@@ -177,7 +167,9 @@ class _AlarmScreenState extends State<AlarmScreen> {
           child: Text(
             'ALARMAS',
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.7),
+              color: Theme.of(
+                context,
+              ).textTheme.bodySmall?.color?.withOpacity(0.7),
               letterSpacing: 1.2,
             ),
           ),
@@ -249,10 +241,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
                   ),
                 ),
                 const SizedBox(height: 4),
-                Text(
-                  alarm.label,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
+                Text(alarm.label, style: Theme.of(context).textTheme.bodySmall),
               ],
             ),
           ),
@@ -261,7 +250,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
             onChanged: (value) {
               setState(() {
                 alarm.isEnabled = value;
-                _nextAlarm = _alarms.where((a) => a.isEnabled).isNotEmpty 
+                _nextAlarm = _alarms.where((a) => a.isEnabled).isNotEmpty
                     ? _alarms.firstWhere((a) => a.isEnabled)
                     : null;
               });
@@ -274,8 +263,14 @@ class _AlarmScreenState extends State<AlarmScreen> {
 
   double _calculateAlarmProgress(AlarmData alarm) {
     final now = DateTime.now();
-    final alarmTime = DateTime(now.year, now.month, now.day, alarm.time.hour, alarm.time.minute);
-    
+    final alarmTime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      alarm.time.hour,
+      alarm.time.minute,
+    );
+
     Duration timeUntilAlarm;
     if (alarmTime.isAfter(now)) {
       timeUntilAlarm = alarmTime.difference(now);
@@ -287,14 +282,20 @@ class _AlarmScreenState extends State<AlarmScreen> {
     // Calculate progress as percentage of 24 hours
     final totalSecondsInDay = 24 * 60 * 60;
     final remainingSeconds = timeUntilAlarm.inSeconds;
-    
+
     return 1.0 - (remainingSeconds / totalSecondsInDay);
   }
 
   Duration _calculateTimeUntilAlarm(AlarmData alarm) {
     final now = DateTime.now();
-    final alarmTime = DateTime(now.year, now.month, now.day, alarm.time.hour, alarm.time.minute);
-    
+    final alarmTime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      alarm.time.hour,
+      alarm.time.minute,
+    );
+
     if (alarmTime.isAfter(now)) {
       return alarmTime.difference(now);
     } else {
@@ -305,7 +306,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
 
   void _showAddAlarmDialog(BuildContext context) {
     TimeOfDay selectedTime = TimeOfDay.now();
-    
+
     showDialog(
       context: context,
       builder: (context) => StatefulBuilder(
@@ -347,16 +348,16 @@ class _AlarmScreenState extends State<AlarmScreen> {
                   selectedTime.hour,
                   selectedTime.minute,
                 );
-                
+
                 final alarm = AlarmData(
                   id: DateTime.now().millisecondsSinceEpoch.toString(),
                   time: alarmTime,
                   label: 'Nueva Alarma',
                 );
-                
+
                 setState(() {
                   _alarms.add(alarm);
-                  _nextAlarm = _alarms.where((a) => a.isEnabled).isNotEmpty 
+                  _nextAlarm = _alarms.where((a) => a.isEnabled).isNotEmpty
                       ? _alarms.firstWhere((a) => a.isEnabled)
                       : null;
                 });

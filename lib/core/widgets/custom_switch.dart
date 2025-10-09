@@ -23,7 +23,8 @@ class CustomSwitch extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final defaultActiveColor = activeColor ?? AppColors.primary;
-    final defaultInactiveColor = inactiveColor ?? 
+    final defaultInactiveColor =
+        inactiveColor ??
         (isDark ? AppColors.darkSecondary : AppColors.lightSecondary);
 
     return GestureDetector(
@@ -34,7 +35,9 @@ class CustomSwitch extends StatelessWidget {
         height: height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(height / 2),
-          color: value ? defaultActiveColor : defaultInactiveColor.withOpacity(0.3),
+          color: value
+              ? defaultActiveColor
+              : defaultInactiveColor.withOpacity(0.3),
         ),
         child: AnimatedAlign(
           duration: const Duration(milliseconds: 200),

@@ -14,58 +14,64 @@ class BottomNavigationBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final backgroundColor = isDark ? AppColors.darkSurface : AppColors.lightSurface;
+    final backgroundColor = isDark
+        ? AppColors.darkSurface
+        : AppColors.lightSurface;
     final selectedColor = AppColors.primary;
-    final unselectedColor = isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary;
+    final unselectedColor = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.lightTextSecondary;
 
-    return Container(
-      height: 80,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, -2),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _buildNavItem(
-            icon: Icons.access_time,
-            label: 'Reloj',
-            index: 0,
-            isSelected: currentIndex == 0,
-            selectedColor: selectedColor,
-            unselectedColor: unselectedColor,
-          ),
-          _buildNavItem(
-            icon: Icons.alarm,
-            label: 'Alarma',
-            index: 1,
-            isSelected: currentIndex == 1,
-            selectedColor: selectedColor,
-            unselectedColor: unselectedColor,
-          ),
-          _buildNavItem(
-            icon: Icons.timer,
-            label: 'Cronómetro',
-            index: 2,
-            isSelected: currentIndex == 2,
-            selectedColor: selectedColor,
-            unselectedColor: unselectedColor,
-          ),
-          _buildNavItem(
-            icon: Icons.hourglass_empty,
-            label: 'Temporizador',
-            index: 3,
-            isSelected: currentIndex == 3,
-            selectedColor: selectedColor,
-            unselectedColor: unselectedColor,
-          ),
-        ],
+    return SafeArea(
+      child: Container(
+        height: 80,
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 10,
+              offset: const Offset(0, -2),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _buildNavItem(
+              icon: Icons.access_time,
+              label: 'Reloj',
+              index: 0,
+              isSelected: currentIndex == 0,
+              selectedColor: selectedColor,
+              unselectedColor: unselectedColor,
+            ),
+            _buildNavItem(
+              icon: Icons.alarm,
+              label: 'Alarma',
+              index: 1,
+              isSelected: currentIndex == 1,
+              selectedColor: selectedColor,
+              unselectedColor: unselectedColor,
+            ),
+            _buildNavItem(
+              icon: Icons.timer,
+              label: 'Cronómetro',
+              index: 2,
+              isSelected: currentIndex == 2,
+              selectedColor: selectedColor,
+              unselectedColor: unselectedColor,
+            ),
+            _buildNavItem(
+              icon: Icons.hourglass_empty,
+              label: 'Temporizador',
+              index: 3,
+              isSelected: currentIndex == 3,
+              selectedColor: selectedColor,
+              unselectedColor: unselectedColor,
+            ),
+          ],
+        ),
       ),
     );
   }
