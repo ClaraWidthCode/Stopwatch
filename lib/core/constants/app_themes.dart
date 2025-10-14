@@ -48,18 +48,9 @@ class AppThemes {
           fontSize: 16,
           fontWeight: FontWeight.w500,
         ),
-        bodyLarge: TextStyle(
-          color: AppColors.darkText,
-          fontSize: 16,
-        ),
-        bodyMedium: TextStyle(
-          color: AppColors.darkText,
-          fontSize: 14,
-        ),
-        bodySmall: TextStyle(
-          color: AppColors.darkTextSecondary,
-          fontSize: 12,
-        ),
+        bodyLarge: TextStyle(color: AppColors.darkText, fontSize: 16),
+        bodyMedium: TextStyle(color: AppColors.darkText, fontSize: 14),
+        bodySmall: TextStyle(color: AppColors.darkTextSecondary, fontSize: 12),
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.darkBackground,
@@ -69,9 +60,7 @@ class AppThemes {
       cardTheme: CardThemeData(
         color: AppColors.darkSurface,
         elevation: 2,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
       switchTheme: SwitchThemeData(
         thumbColor: MaterialStateProperty.resolveWith((states) {
@@ -136,18 +125,9 @@ class AppThemes {
           fontSize: 16,
           fontWeight: FontWeight.w500,
         ),
-        bodyLarge: TextStyle(
-          color: AppColors.lightText,
-          fontSize: 16,
-        ),
-        bodyMedium: TextStyle(
-          color: AppColors.lightText,
-          fontSize: 14,
-        ),
-        bodySmall: TextStyle(
-          color: AppColors.lightTextSecondary,
-          fontSize: 12,
-        ),
+        bodyLarge: TextStyle(color: AppColors.lightText, fontSize: 16),
+        bodyMedium: TextStyle(color: AppColors.lightText, fontSize: 14),
+        bodySmall: TextStyle(color: AppColors.lightTextSecondary, fontSize: 12),
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.lightBackground,
@@ -157,9 +137,7 @@ class AppThemes {
       cardTheme: CardThemeData(
         color: AppColors.lightSurface,
         elevation: 2,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
       switchTheme: SwitchThemeData(
         thumbColor: MaterialStateProperty.resolveWith((states) {

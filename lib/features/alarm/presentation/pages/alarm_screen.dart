@@ -69,7 +69,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(
                         context,
-                      ).textTheme.bodySmall?.color?.withOpacity(0.7),
+                      ).textTheme.bodySmall?.color?.withAlpha(70),
                       letterSpacing: 1.2,
                     ),
                   ),
@@ -152,7 +152,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Theme.of(
                     context,
-                  ).textTheme.bodySmall?.color?.withOpacity(0.7),
+                  ).textTheme.bodySmall?.color?.withAlpha(70),
                   letterSpacing: 1.2,
                 ),
               ),
@@ -168,7 +168,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
                       size: 48,
                       color: Theme.of(
                         context,
-                      ).textTheme.bodySmall?.color?.withOpacity(0.5),
+                      ).textTheme.bodySmall?.color?.withAlpha(50),
                     ),
                     const SizedBox(height: 16),
                     Text(
@@ -176,7 +176,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: Theme.of(
                           context,
-                        ).textTheme.bodySmall?.color?.withOpacity(0.7),
+                        ).textTheme.bodySmall?.color?.withAlpha(70),
                       ),
                     ),
                   ],
@@ -206,7 +206,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
                   size: 64,
                   color: Theme.of(
                     context,
-                  ).textTheme.bodySmall?.color?.withOpacity(0.5),
+                  ).textTheme.bodySmall?.color?.withAlpha(50),
                 ),
                 const SizedBox(height: 16),
                 Text(
@@ -236,7 +236,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
                       size: 64,
                       color: Theme.of(
                         context,
-                      ).textTheme.bodySmall?.color?.withOpacity(0.5),
+                      ).textTheme.bodySmall?.color?.withAlpha(50),
                     ),
                     const SizedBox(height: 16),
                     Text(
@@ -279,7 +279,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withAlpha(10),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -299,7 +299,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
                         ? Theme.of(context).textTheme.headlineMedium?.color
                         : Theme.of(
                             context,
-                          ).textTheme.bodySmall?.color?.withOpacity(0.5),
+                          ).textTheme.bodySmall?.color?.withAlpha(50),
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -310,7 +310,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
                         ? Theme.of(context).textTheme.titleMedium?.color
                         : Theme.of(
                             context,
-                          ).textTheme.bodySmall?.color?.withOpacity(0.5),
+                          ).textTheme.bodySmall?.color?.withAlpha(50),
                   ),
                 ),
                 if (alarm.repeatDays.isNotEmpty) ...[
@@ -320,7 +320,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(
                         context,
-                      ).textTheme.bodySmall?.color?.withOpacity(0.7),
+                      ).textTheme.bodySmall?.color?.withAlpha(70),
                     ),
                   ),
                 ],
@@ -392,68 +392,68 @@ class _AlarmScreenState extends State<AlarmScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-              TextField(
-                controller: titleController,
-                decoration: const InputDecoration(
-                  labelText: 'Título',
-                  hintText: 'Ej: Despertar',
+                TextField(
+                  controller: titleController,
+                  decoration: const InputDecoration(
+                    labelText: 'Título',
+                    hintText: 'Ej: Despertar',
+                  ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              ListTile(
-                title: const Text('Hora'),
-                subtitle: Text(DateFormat('HH:mm').format(selectedTime)),
-                trailing: const Icon(Icons.access_time),
-                onTap: () async {
-                  final time = await showTimePicker(
-                    context: context,
-                    initialTime: TimeOfDay.fromDateTime(selectedTime),
-                  );
-                  if (time != null) {
-                    setState(() {
-                      selectedTime = DateTime(
-                        selectedTime.year,
-                        selectedTime.month,
-                        selectedTime.day,
-                        time.hour,
-                        time.minute,
-                      );
-                    });
-                  }
-                },
-              ),
-              const SizedBox(height: 16),
-              const Text('Repetir'),
-              const SizedBox(height: 8),
-              Wrap(
-                children: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
-                    .asMap()
-                    .entries
-                    .map((entry) {
-                      final index = entry.key;
-                      final day = entry.value;
-                      final isSelected = selectedDays.contains(index);
+                const SizedBox(height: 16),
+                ListTile(
+                  title: const Text('Hora'),
+                  subtitle: Text(DateFormat('HH:mm').format(selectedTime)),
+                  trailing: const Icon(Icons.access_time),
+                  onTap: () async {
+                    final time = await showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay.fromDateTime(selectedTime),
+                    );
+                    if (time != null) {
+                      setState(() {
+                        selectedTime = DateTime(
+                          selectedTime.year,
+                          selectedTime.month,
+                          selectedTime.day,
+                          time.hour,
+                          time.minute,
+                        );
+                      });
+                    }
+                  },
+                ),
+                const SizedBox(height: 16),
+                const Text('Repetir'),
+                const SizedBox(height: 8),
+                Wrap(
+                  children: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
+                      .asMap()
+                      .entries
+                      .map((entry) {
+                        final index = entry.key;
+                        final day = entry.value;
+                        final isSelected = selectedDays.contains(index);
 
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 8, bottom: 8),
-                        child: FilterChip(
-                          label: Text(day),
-                          selected: isSelected,
-                          onSelected: (selected) {
-                            setState(() {
-                              if (selected) {
-                                selectedDays.add(index);
-                              } else {
-                                selectedDays.remove(index);
-                              }
-                            });
-                          },
-                        ),
-                      );
-                    })
-                    .toList(),
-              ),
-            ],
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 8, bottom: 8),
+                          child: FilterChip(
+                            label: Text(day),
+                            selected: isSelected,
+                            onSelected: (selected) {
+                              setState(() {
+                                if (selected) {
+                                  selectedDays.add(index);
+                                } else {
+                                  selectedDays.remove(index);
+                                }
+                              });
+                            },
+                          ),
+                        );
+                      })
+                      .toList(),
+                ),
+              ],
             ),
           ),
           actions: [
@@ -497,65 +497,65 @@ class _AlarmScreenState extends State<AlarmScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-              TextField(
-                controller: titleController,
-                decoration: const InputDecoration(labelText: 'Título'),
-              ),
-              const SizedBox(height: 16),
-              ListTile(
-                title: const Text('Hora'),
-                subtitle: Text(DateFormat('HH:mm').format(selectedTime)),
-                trailing: const Icon(Icons.access_time),
-                onTap: () async {
-                  final time = await showTimePicker(
-                    context: context,
-                    initialTime: TimeOfDay.fromDateTime(selectedTime),
-                  );
-                  if (time != null) {
-                    setState(() {
-                      selectedTime = DateTime(
-                        selectedTime.year,
-                        selectedTime.month,
-                        selectedTime.day,
-                        time.hour,
-                        time.minute,
-                      );
-                    });
-                  }
-                },
-              ),
-              const SizedBox(height: 16),
-              const Text('Repetir'),
-              const SizedBox(height: 8),
-              Wrap(
-                children: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
-                    .asMap()
-                    .entries
-                    .map((entry) {
-                      final index = entry.key;
-                      final day = entry.value;
-                      final isSelected = selectedDays.contains(index);
+                TextField(
+                  controller: titleController,
+                  decoration: const InputDecoration(labelText: 'Título'),
+                ),
+                const SizedBox(height: 16),
+                ListTile(
+                  title: const Text('Hora'),
+                  subtitle: Text(DateFormat('HH:mm').format(selectedTime)),
+                  trailing: const Icon(Icons.access_time),
+                  onTap: () async {
+                    final time = await showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay.fromDateTime(selectedTime),
+                    );
+                    if (time != null) {
+                      setState(() {
+                        selectedTime = DateTime(
+                          selectedTime.year,
+                          selectedTime.month,
+                          selectedTime.day,
+                          time.hour,
+                          time.minute,
+                        );
+                      });
+                    }
+                  },
+                ),
+                const SizedBox(height: 16),
+                const Text('Repetir'),
+                const SizedBox(height: 8),
+                Wrap(
+                  children: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
+                      .asMap()
+                      .entries
+                      .map((entry) {
+                        final index = entry.key;
+                        final day = entry.value;
+                        final isSelected = selectedDays.contains(index);
 
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 8, bottom: 8),
-                        child: FilterChip(
-                          label: Text(day),
-                          selected: isSelected,
-                          onSelected: (selected) {
-                            setState(() {
-                              if (selected) {
-                                selectedDays.add(index);
-                              } else {
-                                selectedDays.remove(index);
-                              }
-                            });
-                          },
-                        ),
-                      );
-                    })
-                    .toList(),
-              ),
-            ],
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 8, bottom: 8),
+                          child: FilterChip(
+                            label: Text(day),
+                            selected: isSelected,
+                            onSelected: (selected) {
+                              setState(() {
+                                if (selected) {
+                                  selectedDays.add(index);
+                                } else {
+                                  selectedDays.remove(index);
+                                }
+                              });
+                            },
+                          ),
+                        );
+                      })
+                      .toList(),
+                ),
+              ],
             ),
           ),
           actions: [
@@ -779,7 +779,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
+                color: AppColors.primary.withAlpha(10),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
