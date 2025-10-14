@@ -272,6 +272,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                           style: Theme.of(context).textTheme.bodyMedium,
                           textAlign: TextAlign.center,
                         ),
+                        const SizedBox(height: 16),
                       ],
                     ),
                   ),
