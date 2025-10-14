@@ -28,7 +28,6 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final defaultBackgroundColor = backgroundColor ?? AppColors.primary;
     final defaultTextColor = textColor ?? Colors.white;
 
@@ -40,7 +39,9 @@ class CustomButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: defaultBackgroundColor,
           foregroundColor: defaultTextColor,
-          padding: padding ?? const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          padding:
+              padding ??
+              const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           shape: RoundedRectangleBorder(
             borderRadius: borderRadius ?? BorderRadius.circular(8),
           ),
@@ -87,7 +88,6 @@ class CustomIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final defaultBackgroundColor = backgroundColor ?? AppColors.primary;
     final defaultIconColor = iconColor ?? Colors.white;
 
@@ -118,11 +118,7 @@ class CustomIconButton extends StatelessWidget {
                   ),
                 ),
               )
-            : Icon(
-                icon,
-                color: defaultIconColor,
-                size: size * 0.5,
-              ),
+            : Icon(icon, color: defaultIconColor, size: size * 0.5),
       ),
     );
   }
@@ -147,10 +143,11 @@ class CustomResetButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final defaultBackgroundColor = backgroundColor ?? 
+    final defaultBackgroundColor =
+        backgroundColor ??
         (isDark ? AppColors.darkSurface : AppColors.lightSurface);
-    final defaultIconColor = iconColor ?? 
-        (isDark ? AppColors.darkText : AppColors.lightText);
+    final defaultIconColor =
+        iconColor ?? (isDark ? AppColors.darkText : AppColors.lightText);
 
     return GestureDetector(
       onTap: isLoading ? null : onPressed,

@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+//Core
+import '../core/di/injection_container.dart';
 import '../core/widgets/bottom_navigation_bar_widget.dart';
+
+//Features
+import '../features/alarm/presentation/bloc/alarm_bloc.dart';
+import '../features/alarm/presentation/bloc/alarm_event.dart';
 import '../features/alarm/presentation/pages/alarm_screen.dart';
-import '../features/stopwatch/presentation/pages/stopwatch_screen.dart';
 import '../features/timer/presentation/pages/timer_screen.dart';
+import '../features/stopwatch/presentation/pages/stopwatch_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final VoidCallback onThemeToggle;
@@ -72,7 +80,10 @@ class _HomeScreenState extends State<HomeScreen> {
       case 0:
         return _buildWorldClockScreen();
       case 1:
-        return AlarmScreen();
+        return BlocProvider(
+          create: (context) => sl<AlarmBloc>()..add(LoadAlarms()),
+          child: AlarmScreen(),
+        );
       case 2:
         return StopwatchScreen();
       case 3:
@@ -101,40 +112,6 @@ class _HomeScreenState extends State<HomeScreen> {
           Text(
             'Próximamente disponible',
             style: Theme.of(context).textTheme.bodyMedium,
-          ),
-          const SizedBox(height: 24),
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Column(
-              children: [
-                Text(
-                  'Hora Actual',
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const SizedBox(height: 8),
-                StreamBuilder<DateTime>(
-                  stream: Stream.periodic(
-                    const Duration(seconds: 1),
-                    (_) => DateTime.now(),
-                  ),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      final now = snapshot.data!;
-                      return Text(
-                        '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}',
-                        style: Theme.of(context).textTheme.headlineMedium
-                            ?.copyWith(fontWeight: FontWeight.bold),
-                      );
-                    }
-                    return const CircularProgressIndicator();
-                  },
-                ),
-              ],
-            ),
           ),
         ],
       ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+
+//Core
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/widgets/circular_progress_widget.dart';
 import '../../../../core/widgets/time_display_widget.dart';
@@ -17,7 +19,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
   Duration _elapsedTime = Duration.zero;
   bool _isRunning = false;
   bool _isPaused = false;
-  List<StopwatchLap> _laps = [];
+  final List<StopwatchLap> _laps = [];
 
   @override
   void dispose() {
@@ -72,16 +74,22 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
   void _addLap() {
     if (_isRunning || _isPaused) {
       final lapNumber = _laps.length + 1;
-      final lapTime = _laps.isEmpty 
+      final lapTime = _laps.isEmpty
           ? _elapsedTime
-          : Duration(milliseconds: _elapsedTime.inMilliseconds - _laps.last.totalTime.inMilliseconds);
+          : Duration(
+              milliseconds:
+                  _elapsedTime.inMilliseconds -
+                  _laps.last.totalTime.inMilliseconds,
+            );
 
       setState(() {
-        _laps.add(StopwatchLap(
-          lapNumber: lapNumber,
-          lapTime: lapTime,
-          totalTime: _elapsedTime,
-        ));
+        _laps.add(
+          StopwatchLap(
+            lapNumber: lapNumber,
+            lapTime: lapTime,
+            totalTime: _elapsedTime,
+          ),
+        );
       });
     }
   }
@@ -95,18 +103,16 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
           children: [
             // Stopwatch Display Section
             _buildStopwatchDisplay(context),
-            
+
             const SizedBox(height: 32),
-            
+
             // Control Buttons Section
             _buildControlButtons(context),
-            
+
             const SizedBox(height: 32),
-            
+
             // Laps Section
-            Expanded(
-              child: _buildLapsSection(context),
-            ),
+            Expanded(child: _buildLapsSection(context)),
           ],
         ),
       ),
@@ -121,12 +127,14 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
           Text(
             'CRONÓMETRO',
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.7),
+              color: Theme.of(
+                context,
+              ).textTheme.bodySmall?.color?.withAlpha(70),
               letterSpacing: 1.2,
             ),
           ),
           const SizedBox(height: 24),
-          
+
           CircularProgressWidget(
             progress: _calculateStopwatchProgress(),
             size: 250,
@@ -145,28 +153,22 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'min',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
+                    Text('min', style: Theme.of(context).textTheme.bodySmall),
                     const SizedBox(width: 16),
-                    Text(
-                      'seg',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
+                    Text('seg', style: Theme.of(context).textTheme.bodySmall),
                     const SizedBox(width: 16),
-                    Text(
-                      'mseg',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
+                    Text('mseg', style: Theme.of(context).textTheme.bodySmall),
                   ],
                 ),
                 if (_isRunning || _isPaused) ...[
                   const SizedBox(height: 16),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
-                      color: AppColors.primary.withOpacity(0.1),
+                      color: AppColors.primary.withAlpha(10),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -191,13 +193,14 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         // Reset Button
-        custom.CustomResetButton(
+        custom.CustomIconButton(
+          icon: Icons.refresh,
           size: 50,
           backgroundColor: Theme.of(context).colorScheme.surface,
           iconColor: Theme.of(context).textTheme.bodyMedium?.color,
           onPressed: _elapsedTime.inMilliseconds > 0 ? _resetStopwatch : null,
         ),
-        
+
         // Play/Pause Button
         custom.CustomIconButton(
           icon: _isRunning ? Icons.pause : Icons.play_arrow,
@@ -214,14 +217,15 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
             }
           },
         ),
-        
+
         // Lap Button
         custom.CustomIconButton(
           icon: Icons.flag,
           size: 50,
           backgroundColor: Theme.of(context).colorScheme.surface,
           iconColor: Theme.of(context).textTheme.bodyMedium?.color,
-          onPressed: (_isRunning || _isPaused) && _elapsedTime.inMilliseconds > 0
+          onPressed:
+              (_isRunning || _isPaused) && _elapsedTime.inMilliseconds > 0
               ? _addLap
               : null,
         ),
@@ -238,36 +242,41 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
           child: Text(
             'VUELTAS',
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.7),
+              color: Theme.of(
+                context,
+              ).textTheme.bodySmall?.color?.withAlpha(70),
               letterSpacing: 1.2,
             ),
           ),
         ),
         const SizedBox(height: 16),
-        
+
         Expanded(
           child: _laps.isEmpty
               ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.flag_outlined,
-                        size: 64,
-                        color: Theme.of(context).textTheme.bodySmall?.color,
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'No hay vueltas registradas',
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Toca el botón de bandera para agregar una vuelta',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.flag_outlined,
+                          size: 64,
+                          color: Theme.of(context).textTheme.bodySmall?.color,
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'No hay vueltas registradas',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Toca el botón de bandera para agregar una vuelta',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 16),
+                      ],
+                    ),
                   ),
                 )
               : ListView.builder(
@@ -298,7 +307,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
             width: 32,
             height: 32,
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.1),
+              color: AppColors.primary.withAlpha(10),
               shape: BoxShape.circle,
             ),
             child: Center(
@@ -311,9 +320,9 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
               ),
             ),
           ),
-          
+
           const SizedBox(width: 16),
-          
+
           // Lap Time
           Expanded(
             child: Column(
@@ -322,9 +331,9 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                 TimeDisplayWidget(
                   duration: lap.lapTime,
                   showMilliseconds: true,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 Text(
                   'Tiempo de vuelta',
@@ -333,7 +342,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
               ],
             ),
           ),
-          
+
           // Total Time
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -341,9 +350,9 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
               TimeDisplayWidget(
                 duration: lap.totalTime,
                 showMilliseconds: true,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
               ),
               Text(
                 'Tiempo total',

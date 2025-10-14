@@ -23,7 +23,8 @@ class CircularProgressWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final defaultProgressColor = progressColor ?? AppColors.primary;
-    final defaultBackgroundColor = backgroundColor ?? 
+    final defaultBackgroundColor =
+        backgroundColor ??
         (isDark ? AppColors.darkSecondary : AppColors.lightSecondary);
 
     return SizedBox(
@@ -52,8 +53,7 @@ class CircularProgressWidget extends StatelessWidget {
             ),
           ),
           // Child content
-          if (child != null)
-            Center(child: child!),
+          if (child != null) Center(child: child!),
         ],
       ),
     );

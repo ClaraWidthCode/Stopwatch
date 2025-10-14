@@ -17,7 +17,7 @@ class TimeDisplayWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final defaultStyle = style ?? Theme.of(context).textTheme.displayLarge;
-    
+
     return Text(
       _formatDuration(duration),
       style: defaultStyle,
@@ -33,13 +33,13 @@ class TimeDisplayWidget extends StatelessWidget {
 
     if (showMilliseconds) {
       return '${hours.toString().padLeft(2, '0')}$separator'
-             '${minutes.toString().padLeft(2, '0')}$separator'
-             '${seconds.toString().padLeft(2, '0')}.'
-             '${(milliseconds ~/ 10).toString().padLeft(2, '0')}';
+          '${minutes.toString().padLeft(2, '0')}$separator'
+          '${seconds.toString().padLeft(2, '0')}.'
+          '${(milliseconds ~/ 10).toString().padLeft(2, '0')}';
     } else {
       return '${hours.toString().padLeft(2, '0')}$separator'
-             '${minutes.toString().padLeft(2, '0')}$separator'
-             '${seconds.toString().padLeft(2, '0')}';
+          '${minutes.toString().padLeft(2, '0')}$separator'
+          '${seconds.toString().padLeft(2, '0')}';
     }
   }
 }
