@@ -1,3 +1,4 @@
+//Domian
 import '../../domain/entities/alarm.dart';
 
 class AlarmModel extends Alarm {

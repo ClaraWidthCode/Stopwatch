@@ -5,7 +5,7 @@ class Alarm extends Equatable {
   final String title;
   final DateTime time;
   final bool isActive;
-  final List<int> repeatDays; // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+  final List<int> repeatDays; // 0 = Domingo, 1 = Lunes, ..., 6 = Martes
 
   const Alarm({
     required this.id,
@@ -32,17 +32,10 @@ class Alarm extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-        id,
-        title,
-        time,
-        isActive,
-        repeatDays,
-      ];
+  List<Object?> get props => [id, title, time, isActive, repeatDays];
 
   @override
   String toString() {
     return 'Alarm(id: $id, title: $title, time: $time, isActive: $isActive)';
   }
 }
-

@@ -1,8 +1,12 @@
 import 'dart:io';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:path/path.dart';
+
+//Domian
 import '../../domain/entities/alarm.dart';
 import '../../domain/repositories/alarm_repository.dart';
+
+//Model
 import '../models/alarm_model.dart';
 
 class AlarmRepositoryImpl implements AlarmRepository {
@@ -21,13 +25,9 @@ class AlarmRepositoryImpl implements AlarmRepository {
       sqfliteFfiInit();
       databaseFactory = databaseFactoryFfi;
     }
-    
+
     String path = join(await getDatabasesPath(), 'alarms.db');
-    return await openDatabase(
-      path,
-      version: 1,
-      onCreate: _onCreate,
-    );
+    return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
   Future<void> _onCreate(Database db, int version) async {
@@ -93,11 +93,7 @@ class AlarmRepositoryImpl implements AlarmRepository {
   @override
   Future<void> deleteAlarm(String id) async {
     final db = await database;
-    await db.delete(
-      _tableName,
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    await db.delete(_tableName, where: 'id = ?', whereArgs: [id]);
   }
 
   @override

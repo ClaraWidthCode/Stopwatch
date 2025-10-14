@@ -1,15 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/features/alarm/presentation/bloc/alarm_event.dart';
-import 'package:flutter_application_1/features/alarm/presentation/bloc/alarm_state.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'dart:async';
+import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+//Core
 import '../../../../core/constants/app_colors.dart';
-import '../../../../core/widgets/circular_progress_widget.dart';
-import '../../../../core/widgets/time_display_widget.dart';
 import '../../../../core/widgets/custom_switch.dart';
+import '../../../../core/widgets/time_display_widget.dart';
+import '../../../../core/widgets/circular_progress_widget.dart';
+
+//Domain
 import '../../domain/entities/alarm.dart';
+
+//Bloc
 import '../bloc/alarm_bloc.dart';
+import '../bloc/alarm_state.dart';
+import '../bloc/alarm_event.dart';
 
 class AlarmScreen extends StatefulWidget {
   const AlarmScreen({super.key});

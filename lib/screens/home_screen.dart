@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/features/alarm/presentation/bloc/alarm_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+//Core
 import '../core/di/injection_container.dart';
 import '../core/widgets/bottom_navigation_bar_widget.dart';
+
+//Features
 import '../features/alarm/presentation/bloc/alarm_bloc.dart';
+import '../features/alarm/presentation/bloc/alarm_event.dart';
 import '../features/alarm/presentation/pages/alarm_screen.dart';
-import '../features/stopwatch/presentation/pages/stopwatch_screen.dart';
 import '../features/timer/presentation/pages/timer_screen.dart';
+import '../features/stopwatch/presentation/pages/stopwatch_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final VoidCallback onThemeToggle;
