@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+
+//Core
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/widgets/circular_progress_widget.dart';
 import '../../../../core/widgets/time_display_widget.dart';
@@ -117,9 +119,10 @@ class _TimerScreenState extends State<TimerScreen> {
         child: SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(
-              minHeight: MediaQuery.of(context).size.height - 
-                         MediaQuery.of(context).padding.top - 
-                         MediaQuery.of(context).padding.bottom,
+              minHeight:
+                  MediaQuery.of(context).size.height -
+                  MediaQuery.of(context).padding.top -
+                  MediaQuery.of(context).padding.bottom,
             ),
             child: Column(
               children: [
@@ -153,7 +156,7 @@ class _TimerScreenState extends State<TimerScreen> {
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: Theme.of(
                 context,
-              ).textTheme.bodySmall?.color?.withOpacity(0.7),
+              ).textTheme.bodySmall?.color?.withAlpha(70),
               letterSpacing: 1.2,
             ),
           ),
@@ -195,8 +198,8 @@ class _TimerScreenState extends State<TimerScreen> {
                     ),
                     decoration: BoxDecoration(
                       color: _isCompleted
-                          ? AppColors.success.withOpacity(0.1)
-                          : AppColors.primary.withOpacity(0.1),
+                          ? AppColors.success.withAlpha(10)
+                          : AppColors.primary.withAlpha(10),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -283,7 +286,7 @@ class _TimerScreenState extends State<TimerScreen> {
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: Theme.of(
                 context,
-              ).textTheme.bodySmall?.color?.withOpacity(0.7),
+              ).textTheme.bodySmall?.color?.withAlpha(70),
               letterSpacing: 1.2,
             ),
           ),

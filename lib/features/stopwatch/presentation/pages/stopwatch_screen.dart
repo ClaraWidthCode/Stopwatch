@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+
+//Core
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/widgets/circular_progress_widget.dart';
 import '../../../../core/widgets/time_display_widget.dart';
@@ -17,7 +19,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
   Duration _elapsedTime = Duration.zero;
   bool _isRunning = false;
   bool _isPaused = false;
-  List<StopwatchLap> _laps = [];
+  final List<StopwatchLap> _laps = [];
 
   @override
   void dispose() {
@@ -127,7 +129,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: Theme.of(
                 context,
-              ).textTheme.bodySmall?.color?.withOpacity(0.7),
+              ).textTheme.bodySmall?.color?.withAlpha(70),
               letterSpacing: 1.2,
             ),
           ),
@@ -166,7 +168,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.primary.withOpacity(0.1),
+                      color: AppColors.primary.withAlpha(10),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -242,7 +244,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: Theme.of(
                 context,
-              ).textTheme.bodySmall?.color?.withOpacity(0.7),
+              ).textTheme.bodySmall?.color?.withAlpha(70),
               letterSpacing: 1.2,
             ),
           ),
@@ -272,6 +274,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                           style: Theme.of(context).textTheme.bodyMedium,
                           textAlign: TextAlign.center,
                         ),
+                        const SizedBox(height: 16),
                       ],
                     ),
                   ),
@@ -304,7 +307,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
             width: 32,
             height: 32,
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.1),
+              color: AppColors.primary.withAlpha(10),
               shape: BoxShape.circle,
             ),
             child: Center(

@@ -1,6 +1,10 @@
-import 'package:flutter_application_1/features/alarm/presentation/bloc/alarm_event.dart';
-import 'package:flutter_application_1/features/alarm/presentation/bloc/alarm_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+//Bloc
+import 'alarm_event.dart';
+import 'alarm_state.dart';
+
+//Domain
 import '../../domain/repositories/alarm_repository.dart';
 
 // BLoC
