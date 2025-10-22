@@ -7,6 +7,9 @@ import '../features/alarm/presentation/bloc/alarm_bloc.dart';
 import '../features/alarm/presentation/pages/alarm_screen.dart';
 import '../features/stopwatch/presentation/pages/stopwatch_screen.dart';
 import '../features/timer/presentation/pages/timer_screen.dart';
+import '../features/world_clock/presentation/bloc/world_clock_bloc.dart';
+import '../features/world_clock/presentation/bloc/world_clock_event.dart';
+import '../features/world_clock/presentation/pages/world_clock_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final VoidCallback onThemeToggle;
@@ -74,7 +77,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _getCurrentScreen() {
     switch (_currentIndex) {
       case 0:
-        return _buildWorldClockScreen();
+        return BlocProvider(
+          create: (context) => sl<WorldClockBloc>()..add(const LoadWorldClocks()),
+          child: const WorldClockScreen(),
+        );
       case 1:
         return BlocProvider(
           create: (context) => sl<AlarmBloc>()..add(LoadAlarms()),
@@ -89,28 +95,4 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Widget _buildWorldClockScreen() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.access_time,
-            size: 64,
-            color: Theme.of(context).textTheme.bodySmall?.color,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'Reloj Mundial',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Próximamente disponible',
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-        ],
-      ),
-    );
-  }
 }
