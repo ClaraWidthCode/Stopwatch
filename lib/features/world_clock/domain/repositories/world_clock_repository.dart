@@ -5,4 +5,3 @@ abstract class WorldClockRepository {
   Future<WorldClock> getWorldClockByTimezone(String timezone);
   Future<List<WorldClock>> getPredefinedWorldClocks();
 }
-

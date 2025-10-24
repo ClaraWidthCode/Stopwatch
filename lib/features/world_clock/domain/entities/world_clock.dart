@@ -6,8 +6,9 @@ class WorldClock extends Equatable {
   final String timezone;
   final String country;
   final String city;
-  final DateTime currentTime;
+  final DateTime currentTime; // UTC time
   final String flag;
+  final int utcOffsetSeconds; // Offset from UTC in seconds
 
   const WorldClock({
     required this.id,
@@ -17,18 +18,20 @@ class WorldClock extends Equatable {
     required this.city,
     required this.currentTime,
     required this.flag,
+    this.utcOffsetSeconds = 0,
   });
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        timezone,
-        country,
-        city,
-        currentTime,
-        flag,
-      ];
+    id,
+    name,
+    timezone,
+    country,
+    city,
+    currentTime,
+    flag,
+    utcOffsetSeconds,
+  ];
 
   WorldClock copyWith({
     String? id,
@@ -38,6 +41,7 @@ class WorldClock extends Equatable {
     String? city,
     DateTime? currentTime,
     String? flag,
+    int? utcOffsetSeconds,
   }) {
     return WorldClock(
       id: id ?? this.id,
@@ -47,7 +51,7 @@ class WorldClock extends Equatable {
       city: city ?? this.city,
       currentTime: currentTime ?? this.currentTime,
       flag: flag ?? this.flag,
+      utcOffsetSeconds: utcOffsetSeconds ?? this.utcOffsetSeconds,
     );
   }
 }
-

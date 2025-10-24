@@ -28,25 +28,36 @@ class _WorldClockModalState extends State<WorldClockModal> {
   void initState() {
     super.initState();
     currentTime = widget.worldClock.currentTime;
+    print('🖥️ MODAL: InitState - Ciudad: ${widget.worldClock.city}, Timezone: ${widget.worldClock.timezone}, Hora inicial: ${widget.worldClock.currentTime}');
+    print('🖥️ MODAL: La hora inicial es UTC y será convertida a hora local de ${widget.worldClock.timezone}');
     _loadCurrentTime();
   }
 
   void _loadCurrentTime() {
+    print('🖥️ MODAL: Llamando a API para obtener hora actual de ${widget.worldClock.timezone}');
     context.read<WorldClockBloc>().add(
       GetWorldClockTime(timezone: widget.worldClock.timezone),
     );
   }
 
+
   void _startTimer() {
+    print('🖥️ MODAL: Iniciando timer de actualización cada segundo');
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         currentTime = currentTime.add(const Duration(seconds: 1));
       });
+      // Imprimir cada 10 segundos para no saturar el log
+      if (timer.tick % 10 == 0) {
+        print('🖥️ MODAL: Timer ejecutándose - Hora actual: ${currentTime.toString().substring(11, 19)}');
+      }
     });
   }
 
   @override
   void dispose() {
+    print('🖥️ MODAL: Dispose - Cancelando timer y destruyendo modal');
+    print('🖥️ MODAL: Hora final: ${currentTime.toString().substring(11, 19)}');
     _timer.cancel();
     super.dispose();
   }
@@ -59,16 +70,34 @@ class _WorldClockModalState extends State<WorldClockModal> {
     
     return BlocListener<WorldClockBloc, WorldClockState>(
       listener: (context, state) {
+        print('🖥️ MODAL: Estado recibido: ${state.runtimeType}');
+
         if (state is WorldClockTimeLoaded) {
+          print('🖥️ MODAL: WorldClockTimeLoaded recibido');
+          print('🖥️ MODAL: Nueva hora obtenida (UTC): ${state.worldClock.currentTime}');
+          print('🖥️ MODAL: Ciudad: ${state.worldClock.city}, País: ${state.worldClock.country}');
+
+          // Convertir UTC a hora local usando el offset de la API
+          final localTime = state.worldClock.currentTime.add(Duration(seconds: state.worldClock.utcOffsetSeconds));
+          print('🖥️ MODAL: Nueva hora obtenida (UTC): ${state.worldClock.currentTime}');
+          print('🖥️ MODAL: Offset de API: ${state.worldClock.utcOffsetSeconds} segundos (${state.worldClock.utcOffsetSeconds / 3600} horas)');
+          print('🖥️ MODAL: Hora convertida a local: $localTime');
+          print('🖥️ MODAL: Diferencia UTC vs Local: ${localTime.difference(state.worldClock.currentTime)}');
+
           setState(() {
-            currentTime = state.worldClock.currentTime;
+            currentTime = localTime;
             _isLoading = false;
           });
+          print('🖥️ MODAL: UI actualizada con nueva hora local, loading = false');
           _startTimer();
         } else if (state is WorldClockError) {
+          print('🖥️ MODAL: WorldClockError recibido: ${state.message}');
+          print('🖥️ MODAL: Usando hora local como fallback');
+
           setState(() {
             _isLoading = false;
           });
+          print('🖥️ MODAL: UI actualizada con fallback, loading = false');
           _startTimer(); // Iniciar timer con hora local como fallback
         }
       },

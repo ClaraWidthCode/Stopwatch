@@ -15,16 +15,32 @@ class WorldClockRepositoryImpl implements WorldClockRepository {
 
   @override
   Future<List<WorldClock>> getWorldClocks() async {
+    print('📡 REPOSITORY: Cargando lista de relojes predefinidos');
     final predefinedClocks = await localDataSource.getPredefinedWorldClocks();
-    return predefinedClocks.map((clock) => clock.toEntity()).toList();
+    print('📡 REPOSITORY: Obtenidos ${predefinedClocks.length} relojes de la base de datos local');
+
+    final entities = predefinedClocks.map((clock) => clock.toEntity()).toList();
+    print('📡 REPOSITORY: Convertidos a entidades - Primer reloj: ${entities.first.name}, Hora: ${entities.first.currentTime}');
+    return entities;
   }
 
   @override
   Future<WorldClock> getWorldClockByTimezone(String timezone) async {
+    print('📡 REPOSITORY: Solicitando hora para timezone: $timezone');
+
     try {
+      print('📡 REPOSITORY: Llamando a remoteDataSource para $timezone');
       final clockModel = await remoteDataSource.getCurrentTimeByTimezone(timezone);
-      return clockModel.toEntity();
+      print('📡 REPOSITORY: Datos obtenidos exitosamente de API para $timezone');
+      print('📡 REPOSITORY: Ciudad: ${clockModel.city}, País: ${clockModel.country}, Hora: ${clockModel.currentTime}');
+
+      final entity = clockModel.toEntity();
+      print('📡 REPOSITORY: Convertido a entidad - ID: ${entity.id}, Hora: ${entity.currentTime}');
+      return entity;
     } catch (e) {
+      print('📡 REPOSITORY: Error al obtener datos de API para $timezone: $e');
+      print('📡 REPOSITORY: Creando fallback con hora local para $timezone');
+
       // Fallback: crear un reloj con la hora local
       final fallbackClock = WorldClockModel(
         id: timezone,
@@ -35,7 +51,10 @@ class WorldClockRepositoryImpl implements WorldClockRepository {
         currentTime: DateTime.now(),
         flag: '🏳️',
       );
-      return fallbackClock.toEntity();
+
+      final fallbackEntity = fallbackClock.toEntity();
+      print('📡 REPOSITORY: Fallback creado - ID: ${fallbackEntity.id}, Hora: ${fallbackEntity.currentTime}');
+      return fallbackEntity;
     }
   }
 

@@ -1,8 +1,10 @@
-import 'dart:io';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:path/path.dart';
 
-//Domian
+import 'package:sqflite/sqflite.dart';
+
+//Core
+import '../../../../core/database/database_helper.dart';
+
+//Domain
 import '../../domain/entities/alarm.dart';
 import '../../domain/repositories/alarm_repository.dart';
 
@@ -10,46 +12,24 @@ import '../../domain/repositories/alarm_repository.dart';
 import '../models/alarm_model.dart';
 
 class AlarmRepositoryImpl implements AlarmRepository {
-  static Database? _database;
+  final DatabaseHelper _databaseHelper;
   static const String _tableName = 'alarms';
 
-  Future<Database> get database async {
-    if (_database != null) return _database!;
-    _database = await _initDatabase();
-    return _database!;
-  }
+  AlarmRepositoryImpl({required DatabaseHelper databaseHelper})
+      : _databaseHelper = databaseHelper;
 
-  Future<Database> _initDatabase() async {
-    // Initialize FFI for desktop platforms
-    if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-      sqfliteFfiInit();
-      databaseFactory = databaseFactoryFfi;
-    }
-
-    String path = join(await getDatabasesPath(), 'alarms.db');
-    return await openDatabase(path, version: 1, onCreate: _onCreate);
-  }
-
-  Future<void> _onCreate(Database db, int version) async {
-    await db.execute('''
-      CREATE TABLE $_tableName(
-        id TEXT PRIMARY KEY,
-        title TEXT NOT NULL,
-        time TEXT NOT NULL,
-        is_active INTEGER NOT NULL,
-        repeat_days TEXT
-      )
-    ''');
-  }
+  Future<Database> get database => _databaseHelper.database;
 
   @override
   Future<List<Alarm>> getAllAlarms() async {
     final db = await database;
+    print('🔊 ALARM REPO: Consultando todas las alarmas desde tabla compartida');
     final List<Map<String, dynamic>> maps = await db.query(
       _tableName,
       orderBy: 'time ASC',
     );
 
+    print('🔊 ALARM REPO: ${maps.length} alarmas encontradas');
     return List.generate(maps.length, (i) {
       return AlarmModel.fromMap(maps[i]).toEntity();
     });
@@ -74,6 +54,7 @@ class AlarmRepositoryImpl implements AlarmRepository {
   Future<String> createAlarm(Alarm alarm) async {
     final db = await database;
     final alarmModel = AlarmModel.fromEntity(alarm);
+    print('🔊 ALARM REPO: Creando nueva alarma: ${alarm.title}');
     await db.insert(_tableName, alarmModel.toMap());
     return alarm.id;
   }
@@ -82,6 +63,7 @@ class AlarmRepositoryImpl implements AlarmRepository {
   Future<void> updateAlarm(Alarm alarm) async {
     final db = await database;
     final alarmModel = AlarmModel.fromEntity(alarm);
+    print('🔊 ALARM REPO: Actualizando alarma: ${alarm.title}');
     await db.update(
       _tableName,
       alarmModel.toMap(),
@@ -93,6 +75,7 @@ class AlarmRepositoryImpl implements AlarmRepository {
   @override
   Future<void> deleteAlarm(String id) async {
     final db = await database;
+    print('🔊 ALARM REPO: Eliminando alarma con ID: $id');
     await db.delete(_tableName, where: 'id = ?', whereArgs: [id]);
   }
 
@@ -101,6 +84,7 @@ class AlarmRepositoryImpl implements AlarmRepository {
     final alarm = await getAlarmById(id);
     if (alarm != null) {
       final updatedAlarm = alarm.copyWith(isActive: !alarm.isActive);
+      print('🔊 ALARM REPO: Cambiando estado de alarma: ${alarm.title} -> ${updatedAlarm.isActive}');
       await updateAlarm(updatedAlarm);
     }
   }

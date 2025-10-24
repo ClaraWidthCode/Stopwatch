@@ -1,8 +1,15 @@
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
+
+//Core
+import '../database/database_helper.dart';
+
+//Features - Alarm
 import '../../features/alarm/data/repositories/alarm_repository_impl.dart';
 import '../../features/alarm/domain/repositories/alarm_repository.dart';
 import '../../features/alarm/presentation/bloc/alarm_bloc.dart';
+
+//Features - World Clock
 import '../../features/world_clock/data/datasources/world_clock_local_datasource.dart';
 import '../../features/world_clock/data/datasources/world_clock_remote_datasource.dart';
 import '../../features/world_clock/data/repositories/world_clock_database_repository.dart';
@@ -16,8 +23,12 @@ Future<void> init() async {
   // External dependencies
   sl.registerLazySingleton(() => http.Client());
 
+  // Database
+  sl.registerLazySingleton(() => DatabaseHelper());
+
   // Database repositories
-  sl.registerLazySingleton(() => WorldClockDatabaseRepository());
+  sl.registerLazySingleton(() => WorldClockDatabaseRepository(databaseHelper: sl()));
+  sl.registerLazySingleton<AlarmRepository>(() => AlarmRepositoryImpl(databaseHelper: sl()));
 
   // Data sources
   sl.registerLazySingleton<WorldClockLocalDataSource>(
@@ -28,7 +39,6 @@ Future<void> init() async {
   );
 
   // Repository
-  sl.registerLazySingleton<AlarmRepository>(() => AlarmRepositoryImpl());
   sl.registerLazySingleton<WorldClockRepository>(
     () => WorldClockRepositoryImpl(
       remoteDataSource: sl(),
